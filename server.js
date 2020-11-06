@@ -18,7 +18,7 @@ Tasks = []
 // Task data
 
 Tasks.push(new Task(1, ' lese til eksamen', 'eksamen', 'les fra kap 12 til kap 25 .'))
-Tasks.push(new Task(2, 'se på tv ', 'Gjøremål fotball kamp', 'start mot brann i kveld .'))
+Tasks.push(new Task(2, 'se på tv ', 'Gjøremål fotball kamp', 'start mot brann i kveld !!.'))
 Tasks.push(new Task(3, 'klasse tur', 'Paris', 'vi skal ut og spise .'))
 
 // Rounters for tasks - will return all tasks
