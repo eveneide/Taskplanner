@@ -1,25 +1,55 @@
+const express = require(`express`);
 
-const express = require('express'),
-  app = express(),
-  port = process.env.PORT || 8080,
-  postgres = require('pg');
-  Task = require('./api/models/taskplannerModel'), //modellen loades
-  bodyParser = require('body-parser');
-  
-// connecter til postgres database
-postgres.Promise = global.Promise;
-postgres.connect('postgres://tmplmhrmilqvtk:747f8924461eeb0726f584d31b1c995bf8341aee029d9e6e2910117814156349@ec2-34-251-118-151.eu-west-1.compute.amazonaws.com:5432/d1e36c0kot9sq0'); 
+const bodyParser = require('body-parser')
+const app = express();
 
+app.use(bodyParser.urlencoded({extended: true}));
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+class Task{
+    constructor(id, title, subject, task_text){
+        this.id = id;
+        this.title = title;
+        this.subject = subject;
+        this.task_text = task_text;
+    }
+}
 
+Tasks = []
+// Task data
 
-var routes = require('./api/routes/taskplannerRoutes'); //importerer route
-routes(app); //registrerer routes
+Tasks.push(new Task(1, ' lese til eksamen', 'eksamen', 'les fra kap 12 til kap 25 .'))
+Tasks.push(new Task(2, 'se på tv ', 'Gjøremål fotball kamp', 'start mot brann i kveld .'))
+Tasks.push(new Task(3, 'klasse tur', 'Paris', 'vi skal ut og spise .'))
 
+// Rounters for tasks - will return all tasks
+app.get(`/task`, (reg, res) =>{
+    res.send(Tasks);
+});
 
-app.listen(port);
+// Will return one task
+app.get(`/task/:id`, (reg, res) =>{
+    // Id som kommer fra url
+    const id = reg.params.id;
+    if(id > Tasks.length){
+        return res.send('Bad request', 400);
+    }
+    // Vi ser om vi har en task med id som kommer fra url
+    for(let i = 0; i < Tasks.length; i++){
+        if(Tasks[i].id == id){
+            return  res.send(Tasks[i]);
+        }
+    }
 
+});
 
-console.log('todo list RESTful API server started on: ' + port);
+// Route to create new task
+app.post(`/task`, (req, res) => {
+    console.log(req);
+    console.log(req.body)
+    Tasks.push(req.body)
+    return res.sendStatus(200);
+});
+
+const PORT = process.env.PORT || 8080;
+app.listen(PORT,() => console.log(`running on ${PORT}`));
+
