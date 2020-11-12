@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Document</title>
+ <link rel= "stylesheet" href= "stylesheet.css">
+</head>
+<body>
+    <h1>Create User: </h1>
+    <form id= "createUserForm">
+
+        <label for="inpEmail">Email: </label>
+        <input id= "inpEmail" name= "email" type="email">
+
+        <label for="inpPsw">Password: </label>
+        <input id= "inpPsw" name= "psw" type="password">
+
+        <input type="submit" value= "Create Account">
+
+    </form>
+
+<script>
+
+    let url = "https://task-lamalama.herokuapp.com/users/"
+    let createUserForm = document.getElementById('createUserForm');
+
+    createUserForm.addEventListener('submit', async function(evt){
+
+    evt.preventDefault();
+    console.log("testing");
+
+    let fdata = new FormData(createUserForm);
+
+    let cfg = {
+        method: "POST",
+        body: fdata
+    }
+    
+    let response = fetch(url,cfg);
+
+
+
+});
+
+</script>
+
+</body>
+</html>

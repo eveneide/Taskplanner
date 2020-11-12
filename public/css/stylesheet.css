@@ -1,0 +1,9 @@
+html {
+    background-color: cornflowerblue;
+    background-image: linear-gradient(0deg,cornflowerblue 100% ); 
+}
+
+html,body {
+    height: 100%;
+    overflow: hidden;
+}
