@@ -1,9 +1,12 @@
 const express = require(`express`);
 
 const bodyParser = require('body-parser')
-const app = express();
+const server = express();
 
-app.use(bodyParser.urlencoded({extended: true}));
+server.use(bodyParser.urlencoded({extended: true}));
+
+server.use(express.static('public'));
+
 
 class Task{
     constructor(id, title, subject, task_text){
@@ -22,12 +25,12 @@ Tasks.push(new Task(2, 'se på tv ', 'Gjøremål fotball kamp', 'start mot brann
 Tasks.push(new Task(3, 'klasse tur', 'Paris', 'vi skal ut og spise .'))
 
 // Rounters for tasks - will return all tasks
-app.get(`/task`, (reg, res) =>{
+server.get(`/task`, (reg, res) =>{
     res.send(Tasks);
 });
 
 // Will return one task
-app.get(`/task/:id`, (reg, res) =>{
+server.get(`/task/:id`, (reg, res) =>{
     // Id som kommer fra url
     const id = reg.params.id;
     if(id > Tasks.length){
@@ -43,13 +46,18 @@ app.get(`/task/:id`, (reg, res) =>{
 });
 
 // Route to create new task
-app.post(`/task`, (req, res) => {
+server.post(`/task`, (req, res) => {
     console.log(req);
     console.log(req.body)
     Tasks.push(req.body)
     return res.sendStatus(200);
 });
 
+
+
+
+});
+
 const PORT = process.env.PORT || 8080;
-app.listen(PORT,() => console.log(`running on ${PORT}`));
+server.listen(PORT,() => console.log(`running on ${PORT}`));
 
