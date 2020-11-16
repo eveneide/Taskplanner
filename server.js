@@ -1,57 +1,81 @@
+
 const express = require(`express`);
 
 const bodyParser = require('body-parser')
 const server = express();
+const pg = require("pg")
 
-server.use(bodyParser.urlencoded({extended: true}));
+server.use(bodyParser.json());
 
 server.use(express.static('public'));
 
 
-class Task{
-    constructor(id, title, subject, task_text){
-        this.id = id;
-        this.title = title;
-        this.subject = subject;
-        this.task_text = task_text;
-    }
-}
+let task = [];
 
-Tasks = []
-// Task data
+//create a task 
 
-Tasks.push(new Task(1, ' lese til eksamen', 'eksamen', 'les fra kap 12 til kap 25 .'))
-Tasks.push(new Task(2, 'se på tv ', 'Gjøremål fotball kamp', 'start mot brann i kveld !!.'))
-Tasks.push(new Task(3, 'klasse tur', 'Paris', 'vi skal ut og spise .'))
+  server.get("/task",async (req, res) =>{
+      res.send(" taskplanner ");
 
-// Rounters for tasks - will return all tasks
-server.get(`/task`, (reg, res) =>{
-    res.send(Tasks);
-});
+  });
 
-// Will return one task
-server.get(`/task/:id`, (reg, res) =>{
-    // Id som kommer fra url
-    const id = reg.params.id;
-    if(id > Tasks.length){
-        return res.send('Bad request', 400);
-    }
-    // Vi ser om vi har en task med id som kommer fra url
-    for(let i = 0; i < Tasks.length; i++){
-        if(Tasks[i].id == id){
-            return  res.send(Tasks[i]);
+  //add a new task 
+  
+  server.post("/task", async (req,res) =>{
+      const task = new task ({
+          title : req.body.title,
+         description: req.body.description
+      });
+
+      
+     
+    });
+
+    // get taskS  hente data 
+
+    server.get ("/task", async (req,res) =>{
+        try{
+            const task = await task.findByid(req.params.taskId);
+            res.json(task);
+
+        } catch (err){
+            res.json({message:err});
         }
-    }
 
-});
+        });
+    
+  // remove an existing task 
 
-// Route to create new task
-server.post(`/task`, (req, res) => {
-    console.log(req);
-    console.log(req.body)
-    Tasks.push(req.body)
-    return res.sendStatus(200);
-});
+  server.delete ("/task", async (req,res) => {
+      try {
+      task.removedtask = await task.remove({_id: req.params.taskId});
+      res.json(removetask);
+       
+        }catch (err){
+         res.json({message:err});
+        }
+
+        });
+
+
+
+  // update a task 
+
+  server.put ("/task", async (req,res) => {
+      try {
+          const updatedtask = await task.updateone(
+              { _id: req.params.taskId },
+              {$set: {title : req.body.title}}
+          );
+          res.json(updatedtask);
+          
+        } catch ( err) {
+            res.json({message:err});
+        }
+    
+      });
+  
+
 
 const PORT = process.env.PORT || 8080;
 server.listen(PORT,() => console.log(`running on ${PORT}`));
