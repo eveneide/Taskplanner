@@ -22,13 +22,14 @@
 
 <script>
 
-    let url = "https://task-lamalama.herokuapp.com/users/"
+    let url = "https://task-lamalama.herokuapp.com/users/:userId"
+
     let createUserForm = document.getElementById('createUserForm');
 
-    createUserForm.addEventListener('submit', async function(evt){
+        createUserForm.addEventListener('submit', async function(evt){
 
-    evt.preventDefault();
-    console.log("testing");
+            evt.preventDefault();
+            console.log("testing");
 
     let fdata = new FormData(createUserForm);
 
@@ -38,6 +39,7 @@
     }
     
     let response = fetch(url,cfg);
+
 
 
 
