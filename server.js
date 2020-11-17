@@ -1,9 +1,9 @@
 
-const express = require(`express`);
+const express = require('express');
 
 const bodyParser = require('body-parser')
 const server = express();
-const pg = require("pg")
+const pg = require('pg')
 
 server.use(bodyParser.json());
 
@@ -14,8 +14,8 @@ let task = [];
 
 //create a task 
 
-  server.get("/task",async (req, res) =>{
-      res.send(" taskplanner ");
+  server.get('/task',async (req, res) =>{
+      res.send( "task planner");
 
   });
 
@@ -46,9 +46,9 @@ let task = [];
     
   // remove an existing task 
 
-  server.delete ("/task", async (req,res) => {
+  server.delete ('/task:id', async (req,res) => {
       try {
-      task.removedtask = await task.remove({_id: req.params.taskId});
+      task.removedtask = await task.remove({_id:req.params.taskId});
       res.json(removetask);
        
         }catch (err){
@@ -61,7 +61,7 @@ let task = [];
 
   // update a task 
 
-  server.put ("/task", async (req,res) => {
+  server.put ('/task', async (req,res) => {
       try {
           const updatedtask = await task.updateone(
               { _id: req.params.taskId },
@@ -78,5 +78,4 @@ let task = [];
 
 
 const PORT = process.env.PORT || 8080;
-server.listen(PORT,() => console.log(`running on ${PORT}`));
-
+server.listen(PORT,() => console.log("running on $ {PORT}"));
