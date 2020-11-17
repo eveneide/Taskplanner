@@ -74,6 +74,23 @@ let task = [];
         }
     
       });
+
+    server.post("/users/:userId", (req, res , next) =>{
+        //console.table(users);  - lager tabell i konsollen etter arrayet er laget for users.
+
+        //sjekker om vi har kontakt med klient-server lokalt
+        res.status(200).json({msg: "Server contact made"});
+    
+        
+    
+    });
+    
+    server.get("/users/:userId", (req, res, next) => {
+        //sjekker om vi har kontakt med klient-server lokalt
+        res.status(200).end();
+    
+    });
+
   
 
 
