@@ -4,7 +4,7 @@ const alphabet = 'abcdefghijklmnopqrstuvwxyz 0123456789.,:;+-?ABCDEFGHIJKLMNOPQR
 
 function encrypt (message, offset){
     const cipher = createCipher(alphabet, offset);
-    const message = cipherText.split("").reduce((c, key) => {
+    const cipherText = cipherText.split("").reduce((c, key) => {
         c += alphabet[cipher.indexOf(key)]
         return c;
     })
