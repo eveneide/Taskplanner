@@ -2,10 +2,11 @@
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyz 0123456789.,:;+-?ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
+
 function encrypt (message, offset){
     const cipher = createCipher(alphabet, offset);
-    const cipherText = cipherText.split("").reduce((c, key) => {
-        c += alphabet[cipher.indexOf(key)]
+    const cipherText = message.split("").reduce((c, key) => {
+        c += cipher[alphabet.indexOf(key)]
         return c;
     })
     return cipherText;
