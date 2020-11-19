@@ -11,16 +11,16 @@
     <div>
 
     
-    <h1>Login: </h1>
-    <form id= "loginForm">
+    <h1>Create User: </h1>
+    <form id= "createUserForm">
 
         <label for="inpEmail">Email: </label> <!--Sett inn bildeboks istedenfor Email:-->
-        <input id= "inpEmail" type="email" placeholder= "Email" value= "of@gmx.com">
+        <input id= "inpEmail" name= "email" type="email" placeholder= "Email" value= "of@gmx.com">
 
         <label for="inpPsw">Password: </label><!--Sett inn bildeboks istedenfor Password:-->
-        <input id= "inpPsw"  type="password" placeholder= "Password" value= "123123koo">
+        <input id= "inpPsw" name= "psw" type="password" placeholder= "Password" value= "123123koo">
 
-        <input type="submit" value= "Login">
+        <input type="submit" value= "Create Account">
 
     </form>
         <p id= "tilbakeMelding"></p>
@@ -28,26 +28,20 @@
     </div>
 <script>
 
-    let url = "https://task-lamalama.herokuapp.com/users/auth"
+    let url = "https://task-lamalama.herokuapp.com/users/:userId" //fjern siste ledd = /:userId før db test. Dette var for å teste serverrespons
 
-    let loginForm = document.getElementById('loginForm');
-    let inpEmail = document.getElementById('inpEmail');
-    let inpPsw = document.getElementById('inpPsw');
+    let createUserForm = document.getElementById('createUserForm');
     let tilbakeMelding = document.getElementById('tilbakeMelding');
 
-    loginForm.addEventListener('submit', async function(evt){
+    createUserForm.addEventListener('submit', async function(evt){
 
         evt.preventDefault();
 
-        let fdata = {
-            email: inpEmail.value,
-            psw: inpPsw.value
-        }
+        let fdata = new FormData(createUserForm);
 
          let cfg = {
             method: "POST",
-            headers: {"content-type" : "application/json"},
-            body: JSON.stringify(fdata)
+            body: fdata
         }
         
         try {
@@ -56,17 +50,15 @@
         let response = await fetch(url,cfg);
         let data = await response.json();
 
-            /* Kode for passord er feil/ugyldig brukernavn. trenger riktig feilkode fra db
+            /* Kode for brukernavn allerede i bruk. trenger riktig feilkode fra db
             if (response.status != 200){
                 if (data.err == ""){
-                    tilbakeMelding.innerHTML = "Brukernavn er ugyldig!"
-                }
-                else if (data.err == ""){
-                    tilbakeMelding.innerHTML = "Passord er feil!"
+                    tilbakeMelding.innerHTML = "Brukernavn er allerede i bruk!"
                 }
                 else {
                     tilbakeMelding.innerHTML = "Noe gikk galt"
                 }
+                
             }
 
             console.log(response);
