@@ -1,6 +1,6 @@
 const database = require("./database")
 
-const kryptering = require('taskplannercipher');
+const kryptering = require('./taskplannercipher');
 const secret = process.env.hashSecret || require("../localenv").hashSecret;
 
 class User {
