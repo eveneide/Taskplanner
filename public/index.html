@@ -56,13 +56,12 @@
         let response = await fetch(url,cfg);
         let data = await response.json();
 
+        localStorage.setItem("logindata", JSON.stringify(fdata));
+
             /* Kode for passord er feil/ugyldig brukernavn. trenger riktig feilkode fra db
             if (response.status != 200){
-                if (data.err == ""){
-                    tilbakeMelding.innerHTML = "Brukernavn er ugyldig!"
-                }
-                else if (data.err == ""){
-                    tilbakeMelding.innerHTML = "Passord er feil!"
+                if (response.status == 401){
+                    tilbakeMelding.innerHTML = "Brukernavn og/eller passord er ugyldig!"
                 }
                 else {
                     tilbakeMelding.innerHTML = "Noe gikk galt"
