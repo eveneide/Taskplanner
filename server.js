@@ -4,13 +4,17 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const server = express();
 const pg = require('pg')
-
 server.use(bodyParser.json());
-
 server.use(express.static('public'));
 
+const {
+    Router
+  } = require('express');
 
-let task = [];
+
+
+
+  let task = [];
 
 //create a task 
 
@@ -92,6 +96,7 @@ let task = [];
     });
 
   
+// start server
 
 
 const PORT = process.env.PORT || 8080;
