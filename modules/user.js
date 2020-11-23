@@ -1,13 +1,16 @@
-const database = require("./database")
+const database = require("./datahandler")
 
-const kryptering = require('./taskplannercipher');
-const secret = process.env.hashSecret || require("../localenv").hashSecret;
+const crypto = require('crypto');
+const tpc = require("./taskplannercipher")
+//const secret = process.env.hashSecret || require("../localenv").hashSecret;
+const secret ='abcdefg'
 
 class User {
 
     constructor(username, password) {
+        console.log(username + password)
         this.username = username;
-        this.password = kryptering.createHmac('sha256', secret)
+        this.password = crypto.createHmac('sha256', secret)
             .update(password)
             .digest('hex');
         this.isValid = false;

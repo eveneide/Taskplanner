@@ -1,11 +1,34 @@
 
 const express = require('express');
-
+const user = require("./modules/user");
 const bodyParser = require('body-parser')
 const server = express();
 const pg = require('pg')
 server.use(bodyParser.json());
 server.use(express.static('public'));
+
+
+server.post("/user", async function (req, res) {
+    const username = req.body.username;
+    const password = req.body.password;
+    console.log(username + password)
+  
+  
+    
+    
+     
+      const newUser = new user(username, password);
+      const resp = await newUser.create();
+  
+      if (resp === null) {
+        res.status(401).json("Username is taken!").end();
+      } else {
+        res.status(200).json("Account created!").end();
+      }
+      // Hva om databasen feilet?
+      // Hva om det var en bruker med samme brukernavn?
+    
+  });
 
 const {
     Router

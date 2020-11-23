@@ -1,33 +1,40 @@
+const { keysecret } = require("../localenv");
+const user = require("./user.js");
+const crypto = require('crypto');
 
 
-const alphabet = 'abcdefghijklmnopqrstuvwxyz 0123456789.,:;+-?ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
+const algorithm = 'aes-256-ctr';
+const iv = crypto.randomBytes(16);
 
-function encrypt (message, offset){
-    const cipher = createCipher(alphabet, offset);
-    const cipherText = message.split("").reduce((c, key) => {
-        c += cipher[alphabet.indexOf(key)]
-        return c;
-    })
-    return cipherText;
+function encrypt (user){
+    let cipher = crypto.createCipheriv(algorithm, Buffer.from(keysecret), iv);
+    let encrypted = cipher.update(JSON.stringify(body));
+    encrypted = Buffer.concat([encrypted, cipher.final()]);
+    let ivString = iv.toString("hex");
+    let encryptedDataString = encrypted.toString('hex');
+
+    let finalCipher = {"cipher":`${ivString}.${encryptedDataString}`};
+    
+    return finalCipher;
 }
 
-function decrypt (cipherText, offset) {
-    const cipher = createCipher(alphabet, offset);
-    const message = cipherText.split("").reduce((c, key) => {
-        c += alphabet[cipher.indexOf(key)]
-        return c;
-    })
-    return message;
+function decrypt (cipher, user) {
+    const splitCipher = token.authToken.split(".");
+    let tIV = splitCipher[0];
+    let tEncryptedData = splitCipher[1];
+    let iv = Buffer.from(tIV, 'hex');
+        let encryptedCipher = Buffer.from(tEncryptedData, 'hex');
+        let decipher = crypto.createDecipheriv(algorithm, Buffer.from(keysecret), iv);
+        let decrypted = decipher.update(encryptedCipher);
+        decrypted = Buffer.concat([decrypted, decipher.final()]);
 
+        let cipherText = decrypted.toString();
+        return cipherText;
 }
 
-function createCipher(alphabet, count){
-    let cipher = [...alphabet];
-    count -= cipher.length * Math.floor(count / cipher.length);
-    cipher.push.apply(cipher, cipher.splice(0, count));
-    return cipher;
-}
+
+
 
 module.exports = {
 
