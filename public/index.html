@@ -8,80 +8,24 @@
  <link rel="shortcut icon" href="#">
 </head>
 <body>
+
     <div>
+    <h1>Lama-Lama TodoList </h1>
+    <hr>
 
-    
-    <h1>Login: </h1>
-    <form id= "loginForm">
+    <div class = "link_index">
+    <a href="login_user.html" >Login</a>
+    </div>
+    <br>
 
-        <label for="inpEmail">Email: </label> <!--Sett inn bildeboks istedenfor Email:-->
-        <input id= "inpEmail" type="email" placeholder= "Email" value= "of@gmx.com">
-
-        <label for="inpPsw">Password: </label><!--Sett inn bildeboks istedenfor Password:-->
-        <input id= "inpPsw"  type="password" placeholder= "Password" value= "123123koo">
-
-        <input type="submit" value= "Login">
-
-    </form>
-        <p id= "tilbakeMelding"></p>
+    <div class = "link_index">
+    <a href="create_user.html">Sign up</a>
+    </div>
 
     </div>
-<script>
 
-    let url = "https://task-lamalama.herokuapp.com/users/auth"
+    <script>
 
-    let loginForm = document.getElementById('loginForm');
-    let inpEmail = document.getElementById('inpEmail');
-    let inpPsw = document.getElementById('inpPsw');
-    let tilbakeMelding = document.getElementById('tilbakeMelding');
-
-    loginForm.addEventListener('submit', async function(evt){
-
-        evt.preventDefault();
-
-        let fdata = {
-            email: inpEmail.value,
-            psw: inpPsw.value
-        }
-
-         let cfg = {
-            method: "POST",
-            headers: {"content-type" : "application/json"},
-            body: JSON.stringify(fdata)
-        }
-        
-        try {
-
-        
-        let response = await fetch(url,cfg);
-        let data = await response.json();
-
-            /* Kode for passord er feil/ugyldig brukernavn. trenger riktig feilkode fra db
-            if (response.status != 200){
-                if (data.err == ""){
-                    tilbakeMelding.innerHTML = "Brukernavn er ugyldig!"
-                }
-                else if (data.err == ""){
-                    tilbakeMelding.innerHTML = "Passord er feil!"
-                }
-                else {
-                    tilbakeMelding.innerHTML = "Noe gikk galt"
-                }
-            }
-
-            console.log(response);
-
-            */
-        }
-        catch (err){
-            tilbakeMelding.innerHTML = "Noe gikk galt"
-        }
-
-    });
-
-
-
-</script>
-
+    </script>
 </body>
 </html>

@@ -28,7 +28,7 @@
     </div>
 <script>
 
-    let url = "https://task-lamalama.herokuapp.com/users/auth"
+    let url = "https://task-lamalama.herokuapp.com/users/auth/"
 
     let loginForm = document.getElementById('loginForm');
     let inpEmail = document.getElementById('inpEmail');
@@ -46,15 +46,16 @@
 
          let cfg = {
             method: "POST",
-            headers: {"content-type" : "application/json"},
+            headers: {"content-type" : "application/json"}, "authorization": credentials,
             body: JSON.stringify(fdata)
         }
         
         try {
 
         
-        let response = await fetch(url,cfg);
+        let response = await fetch("/authenticate",cfg); //authenticate modul når den er oppe
         let data = await response.json();
+            serverResp(response, data);
 
         localStorage.setItem("logindata", JSON.stringify(fdata));
         location.href = "task_list.html"; // ved innlogging, send til tasklist
