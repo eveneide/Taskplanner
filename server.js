@@ -3,20 +3,23 @@ const express = require('express');
 const user = require("./modules/user");
 const bodyParser = require('body-parser')
 const server = express();
-const pg = require('pg')
+const pg = require('pg');
+var util = require('util');
 server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: false }));
 server.use(express.static('public'));
 
+const auth = require('./modules/auth');
 
-server.post("/user", async function (req, res) {
+
+
+
+
+ server.post("/user", async function (req, res) {
     const username = req.body.username;
     const password = req.body.password;
     console.log(username + password)
-  
-  
-    
-    
-     
+
       const newUser = new user(username, password);
       const resp = await newUser.create();
   
@@ -30,9 +33,6 @@ server.post("/user", async function (req, res) {
     
   });
 
-const {
-    Router
-  } = require('express');
 
 
 
@@ -49,13 +49,8 @@ const {
   //add a new task 
   
   server.post("/task", async (req,res) =>{
-      const task = new task ({
-          title : req.body.title,
-         description: req.body.description
-      });
-
-      
-     
+      console.log(req.body)
+    
     });
 
     // get taskS  hente data 
