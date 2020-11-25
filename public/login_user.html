@@ -28,7 +28,7 @@
     </div>
 <script>
 
-    let url = "https://task-lamalama.herokuapp.com/users/auth/"
+    let url = "/users/auth/"
 
     let loginForm = document.getElementById('loginForm');
     let inpEmail = document.getElementById('inpUsername');
@@ -40,9 +40,12 @@
         evt.preventDefault();
 
         let fdata = {
-            email: inpEmail.value,
+            username: inpUsername.value,
             psw: inpPsw.value
         }
+
+        let credentials = 'Basic '+ window.btoa(`${fdata.username}:${fdata.psw}`)
+
 
          let cfg = {
             method: "POST",
