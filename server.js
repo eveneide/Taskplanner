@@ -1,21 +1,41 @@
 
 const express = require('express');
-const user = require("./modules/user");
 const bodyParser = require('body-parser')
 const server = express();
+const user = require("./modules/user");
 const pg = require('pg');
-var util = require('util');
+const jtoken = require('./modules/jtoken');
+
+
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(express.static('public'));
+
 
 const auth = require('./modules/auth');
 
 
 
+ // innlogging //
+
+server.post('/users/login', authenticator, async (req, res) => {
+
+  if (req.login) {
+      let token = jtoken.makeToken({ username: req.user });
+      res.status(200).json(token);
+
+  } else {
+
+      res.status(403).send('Noe gikk galt').end();
+  }
+});
 
 
- server.post("/user", async function (req, res) {
+
+
+
+// Create User //
+server.post("/user", async function (req, res) {
     const username = req.body.username;
     const password = req.body.password;
     console.log(username + password)
@@ -39,19 +59,23 @@ const auth = require('./modules/auth');
 
   let task = [];
 
-//create a task 
+
+  //create a task 
 
   server.get('/task',async (req, res) =>{
       res.send( "task planner");
 
   });
 
+  
   //add a new task 
   
   server.post("/task", async (req,res) =>{
       console.log(req.body)
     
     });
+
+
 
     // get taskS  hente data 
 
@@ -97,7 +121,8 @@ const auth = require('./modules/auth');
     
       });
 
-    server.post("/users/:userId", (req, res , next) =>{
+    
+      server.post("/users/:userId", (req, res , next) => {
         //console.table(users);  - lager tabell i konsollen etter arrayet er laget for users.
 
         //sjekker om vi har kontakt med klient-server lokalt
@@ -107,6 +132,8 @@ const auth = require('./modules/auth');
     
     });
     
+   
+     
     server.get("/users/:userId", (req, res, next) => {
         //sjekker om vi har kontakt med klient-server lokalt
         res.status(200).end();
@@ -114,8 +141,15 @@ const auth = require('./modules/auth');
     });
 
   
+
+    
+
+
+
+
 // start server
 
 
-const PORT = process.env.PORT || 8080;
-server.listen(PORT,() => console.log("running on $ {PORT}"));
+server.listen(8080,() => {
+  console.log(" server has started on port 8080")
+});

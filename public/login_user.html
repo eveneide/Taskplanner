@@ -14,8 +14,8 @@
     <h1>Login: </h1>
     <form id= "loginForm">
 
-        <label for="inpUsername">Username: </label> <!--Sett inn bildeboks istedenfor Email:-->
-        <input id= "inpUsername" type="text" placeholder= "Username" value= "">
+        <label for="inpEmail">Email: </label> <!--Sett inn bildeboks istedenfor Email:-->
+        <input id= "inpEmail" type="email" placeholder= "Email" value= "of@gmx.com">
 
         <label for="inpPsw">Password: </label><!--Sett inn bildeboks istedenfor Password:-->
         <input id= "inpPsw"  type="password" placeholder= "Password" value= "123123koo">
@@ -31,7 +31,7 @@
     let url = "/users/auth/"
 
     let loginForm = document.getElementById('loginForm');
-    let inpEmail = document.getElementById('inpUsername');
+    let inpEmail = document.getElementById('inpEmail');
     let inpPsw = document.getElementById('inpPsw');
     let tilbakeMelding = document.getElementById('tilbakeMelding');
 
