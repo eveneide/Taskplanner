@@ -14,11 +14,11 @@
     <h1>Login: </h1>
     <form id= "loginForm">
 
-        <label for="inpEmail">Email: </label> <!--Sett inn bildeboks istedenfor Email:-->
-        <input id= "inpEmail" type="email" placeholder= "Email" value= "of@gmx.com">
+        <label for="inpUsername">Username: </label> <!--Sett inn bildeboks istedenfor Email:-->
+        <input id= "inpUsername" name= "username" type="text" placeholder= "username" value= "test">
 
         <label for="inpPsw">Password: </label><!--Sett inn bildeboks istedenfor Password:-->
-        <input id= "inpPsw"  type="password" placeholder= "Password" value= "123123koo">
+        <input id= "inpPsw" name= "psw" type="password" placeholder= "Password" value= "aaa">
 
         <input type="submit" value= "Login">
 
@@ -28,11 +28,11 @@
     </div>
 <script>
 
-    let url = "/users/login"
+    let url = "/user/auth"
 
     let loginForm = document.getElementById('loginForm');
-    let inpEmail = document.getElementById('inpEmail');
-    let inpPsw = document.getElementById('inpPsw');
+    const inpUsername = document.getElementById("inpUsername").value;
+    const inpPsw = document.getElementById("inpPsw").value;
     let tilbakeMelding = document.getElementById('tilbakeMelding');
 
     loginForm.addEventListener('submit', async function(evt){
