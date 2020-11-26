@@ -8,7 +8,6 @@ const jtoken = require('./modules/jtoken');
 
 
 server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({ extended: false }));
 server.use(express.static('public'));
 
 
@@ -39,7 +38,11 @@ server.post("/user", async function (req, res) {
     const username = req.body.username;
     const password = req.body.password;
     console.log(username + password)
-
+  
+  
+    
+    
+     
       const newUser = new user(username, password);
       const resp = await newUser.create();
   
@@ -53,6 +56,9 @@ server.post("/user", async function (req, res) {
     
   });
 
+const {
+    Router
+  } = require('express');
 
 
 
@@ -71,8 +77,13 @@ server.post("/user", async function (req, res) {
   //add a new task 
   
   server.post("/task", async (req,res) =>{
-      console.log(req.body)
-    
+      const task = new task ({
+          title : req.body.title,
+         description: req.body.description
+      });
+
+      
+     
     });
 
 
