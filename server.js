@@ -1,9 +1,12 @@
 
 const express = require('express');
-const user = require("./modules/user");
 const bodyParser = require('body-parser')
 const server = express();
+const user = require("./modules/user");
 const pg = require('pg');
+const jtoken = require('./modules/jtoken');
+
+
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(express.static('public'));
@@ -15,20 +18,23 @@ const auth = require('./modules/auth');
 
  // innlogging //
 
- server.post('/login', (req, res) => {
+server.post('/users/login', authenticator, async (req, res) => {
 
-  const  username = req.body.username;
-  const  password = req.body.password;
-  res.send(`Username: ${username} Password: ${password}`);
+  if (req.login) {
+      let token = jtoken.makeToken({ username: req.user });
+      res.status(200).json(token);
 
+  } else {
 
-
+      res.status(403).send('Noe gikk galt').end();
+  }
 });
 
 
 
 
 
+// Create User //
 server.post("/user", async function (req, res) {
     const username = req.body.username;
     const password = req.body.password;
