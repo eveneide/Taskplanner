@@ -56,7 +56,7 @@
             method: "POST",
             headers: {// create task. token hente fra database, antageligvis credentials i databasemodul. 
                 "content-type" : "application/json",
-                "authorization" : loginData.token
+                "authorization" : credentials
             },
             body: JSON.stringify(fdata)
 
