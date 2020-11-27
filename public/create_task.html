@@ -32,6 +32,8 @@
 
 <script>
 
+    const database = require("./datahandler")
+
     let url = "https://task-lamalama.herokuapp.com/task/"
 
 
@@ -42,6 +44,9 @@
 
     let loginDataJson = localStorage.getItem("logindata"); //hvis vi vil hente lokaldata i json
     let loginData = JSON.parse(loginDataJson); //hente lokal data, convertere fra json
+
+    let title = "title test";
+    let tId =  "task id";
 
     taskForm.addEventListener('submit', async function(evt){
 

@@ -19,7 +19,7 @@ class User {
 
     async create() {
         try {
-            let resp = await database.insertUser(this.username, this.password);
+            let resp = await database.placeAccIntoDb(this.username, this.password);
             return resp;
         } catch (error) {
             console.error(error)
@@ -29,7 +29,7 @@ class User {
     async authenticate() {
         let success = false;
         try {
-            let res = await database.selectUser(this.username, this.password);
+            let res = await database.getUserFromDb(this.username, this.password);
 
             if (res != null) {
                 this.isValid = true;
