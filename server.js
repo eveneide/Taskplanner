@@ -1,23 +1,85 @@
 
 const express = require('express');
-const bodyParser = require('body-parser')
-const server = express();
-const user = require("./modules/user");
+const bodyParser = require('body-parser');
 const pg = require('pg');
+const server = express();
+
+const database = require('./modules/datahandler');
+const user = require("./modules/user");
 const jtoken = require('./modules/jtoken');
+const tpc = require('./modules/taskplannercipher');
+
 
 
 server.use(bodyParser.json());
 server.use(express.static('public'));
 
+const credentials = require('./localenv').DATABASE_URL || process.env.DATABASE_URL;
+const keysecret = require('./localenv').HASH_SECRET || process.env.HASH_SECRET;
 
-const auth = require('./modules/auth');
+//const database = new storage(credentials);
+
+// Authenticator middleware//
+
+const authenticator = async (req, res, next) => {
+ 
+  if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
+      return res.append("WWW-Authenticate", 'Basic realm="User Visible Realm", charset="UTF-8"').status(401).end();
+  }
+
+  const credentials = req.headers.authorization.split(' ')[1];
+  const [username, password] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
+
+    //Hente user og passord fra databasen
+    let fetchPassword;
+    if (username) {
+        let data = await database.selectUser(username);
+        if (!data) {
+            console.log('Bruker eksisterer ikke!');
+            return;
+        } else {
+            fetchPassword = data.password;
+        }
+    }
+      //Hvis passord og login er ok
+      if (tpc.encrypt(tpc.encrypt(password), fetchPassword)) {
+        req.user = username;
+        req.login = true;
+        next();
+      } else {
+        req.login = false;
+        next();
+      }
+}
+
+//tilgang
+const authorizer = async (req, res, next) => {
+
+  if (!req.headers.authorization || req.headers.authorization.indexOf('Bearer ') === -1) {
+      return res.append("WWW-Authenticate", 'Bearer realm="User Visible Realm", charset="UTF-8"').status(401).end();
+  }
+
+  //Verifisere token
+  let token = req.headers.authorization.split(' ')[1];
+  let valid = jtoken.valToken(token);
+
+  if (valid) {
+      //console.log('Authorized');
+      req.authorized = true;
+      req.token = token;
+      next();
+  } else {
+      //console.log('Unauthorized');
+      res.status(401).end();
+  }
+}
+
+
 
 
 
  // innlogging //
-
-server.post('/users/login', authenticator, async (req, res) => {
+server.post('/user/auth', authenticator, async (req, res) => {
 
   if (req.login) {
       let token = jtoken.makeToken({ username: req.user });
@@ -28,7 +90,6 @@ server.post('/users/login', authenticator, async (req, res) => {
       res.status(403).send('Noe gikk galt').end();
   }
 });
-
 
 
 
@@ -59,7 +120,6 @@ server.post("/user", async function (req, res) {
 const {
     Router
   } = require('express');
-
 
 
 
