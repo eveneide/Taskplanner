@@ -51,9 +51,9 @@ function getPayload (token){
 }
 
 
-let token = makeToken(payload);
-let pl = getPayload(token)
-console.log(pl)
+//let token = makeToken(payload);
+//let pl = getPayload(token)
+//console.log(pl)
 
 module.exports= {
     makeToken,
