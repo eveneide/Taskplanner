@@ -24,6 +24,13 @@ html,body {
     color: cornflowerblue;
 }
 
+.link_index{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    display:flex;
+    border-radius: 5px;
+}
+
 .inputinfo {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 16px;
