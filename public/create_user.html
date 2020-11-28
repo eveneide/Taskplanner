@@ -8,27 +8,27 @@
  <link rel="shortcut icon" href="#">
 </head>
 <body>
-    <div>
+    <div class= "centered-container">
 
-    
-    <h1>Create User: </h1>
+        <div class= "create-login-container">
+    <h1 class= "title" >Create User: </h1>
     <form id= "createUserForm">
 
-        <label for="inpUsername">Email: </label> <!--Sett inn bildeboks istedenfor Email:-->
-        <input id= "inpUsername" name= "username" type="text" placeholder= "username" value= "test">
+        <label for="inpUsername" class= "inputinfo" >Username: </label> <!--Sett inn bildeboks istedenfor Email:-->
+        <input id= "inpUsername" name= "username" type="text" class= "input" placeholder= "username" value= "test">
 
-        <label for="inpPsw">Password: </label><!--Sett inn bildeboks istedenfor Password:-->
-        <input id= "inpPsw" name= "psw" type="password" placeholder= "Password" value= "aaa">
+        <label for="inpPsw" class= "inputinfo">Password: </label><!--Sett inn bildeboks istedenfor Password:-->
+        <input id= "inpPsw" name= "psw" type="password" class= "input" placeholder= "Password" value= "aaa">
 
-        <input type="submit" value= "Create Account"> <!--Legg til en "eller login" knapp med href til loginside-->
+        <input type="submit" class= "btn1" value= "Create Account"> 
 
     </form>
         <p id= "tilbakeMelding"></p>
-
+        </div>
     </div>
 <script>
     
-    let url = "/user/"
+    let url = "/user"
 
     let createUserForm = document.getElementById('createUserForm');
     let tilbakeMelding = document.getElementById('tilbakeMelding');
@@ -58,6 +58,9 @@
                 const response = await fetch("/user", config);
                 const data = await response.json();
                 
+                if (response.status === 200){
+            
+        }
 
 
         

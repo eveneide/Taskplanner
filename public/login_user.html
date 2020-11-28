@@ -4,31 +4,31 @@
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>Document</title>
- <link rel= "stylesheet" href= "css/stylesheet.css">
+ <link rel= "stylesheet" href= "./css/stylesheet.css">
  <link rel="shortcut icon" href="#">
 </head>
 <body>
-    <div>
+    <div class= "centered-container">
 
-    
-    <h1>Login: </h1>
+        <div class= "create-login-container">
+    <h1 class= "title">Login: </h1>
     <form id= "loginForm">
 
-        <label for="inpUsername">Username: </label> <!--Sett inn bildeboks istedenfor Email:-->
-        <input id= "inpUsername" name= "username" type="text" placeholder= "username" value= "test">
+        <label for="inpUsername" class= "inputinfo" >Username: </label> <!--Sett inn bildeboks istedenfor Email:-->
+        <input id= "inpUsername" name= "username" type="text" class= "input" placeholder= "username" value= "test">
 
-        <label for="inpPsw">Password: </label><!--Sett inn bildeboks istedenfor Password:-->
-        <input id= "inpPsw" name= "psw" type="password" placeholder= "Password" value= "aaa">
+        <label for="inpPsw" class= "inputinfo" >Password: </label><!--Sett inn bildeboks istedenfor Password:-->
+        <input id= "inpPsw" name= "psw" type="password" class= "input" placeholder= "Password" value= "aaa">
 
-        <input type="submit" value= "Login">
+        <input type="submit" class= "btn1" value= "Login">
 
     </form>
         <p id= "tilbakeMelding"></p>
-
+        </div>
     </div>
 <script>
 
-    let url = "/user/auth"
+    const url = "/user/auth"
 
     let loginForm = document.getElementById('loginForm');
     const inpUsername = document.getElementById("inpUsername").value;
@@ -53,32 +53,12 @@
             body: JSON.stringify(fdata)
         }
         
-        try {
-
-        
-        let response = await fetch("/authenticate",cfg); //authenticate modul når den er oppe
+        let response = await fetch(url,cfg);
         let data = await response.json();
-            serverResp(response, data);
 
-        localStorage.setItem("logindata", JSON.stringify(fdata));
-        location.href = "task_list.html"; // ved innlogging, send til tasklist
-
-            /* Kode for passord er feil/ugyldig brukernavn. trenger riktig feilkode fra db
-            if (response.status != 200){
-                if (response.status == 401){
-                    tilbakeMelding.innerHTML = "Brukernavn og/eller passord er ugyldig!"
-                }
-                else {
-                    tilbakeMelding.innerHTML = "Noe gikk galt"
-                }
-            }
-
-            console.log(response);
-
-            */
-        }
-        catch (err){
-            tilbakeMelding.innerHTML = "Noe gikk galt"
+        if (response.status === 200){
+            localStorage.clear();
+            location.href="task_list.html";
         }
 
     });
