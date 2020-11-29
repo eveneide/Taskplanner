@@ -17,8 +17,6 @@ server.use(express.static('public'));
 const credentials = require('./localenv').DATABASE_URL || process.env.DATABASE_URL;
 const keysecret = require('./localenv').HASH_SECRET || process.env.HASH_SECRET;
 
-//const database = new storage(credentials);
-
 // Authenticator middleware//
 
 const authenticator = async (req, res, next) => {
@@ -33,7 +31,7 @@ const authenticator = async (req, res, next) => {
     //Hente user og passord fra databasen
     let fetchPassword;
     if (username) {
-        let data = await database.selectUser(username);
+        let data = await database.getUserFromDb(username);
         if (!data) {
             console.log('Bruker eksisterer ikke!');
             return;
@@ -54,6 +52,7 @@ const authenticator = async (req, res, next) => {
 
 //tilgang
 const authorizer = async (req, res, next) => {
+  //console.log('Authorizing....');
 
   if (!req.headers.authorization || req.headers.authorization.indexOf('Bearer ') === -1) {
       return res.append("WWW-Authenticate", 'Bearer realm="User Visible Realm", charset="UTF-8"').status(401).end();
@@ -64,7 +63,7 @@ const authorizer = async (req, res, next) => {
   let valid = jtoken.valToken(token);
 
   if (valid) {
-      //console.log('Authorized');
+      console.log('Authorized');
       req.authorized = true;
       req.token = token;
       next();
