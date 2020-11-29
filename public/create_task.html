@@ -18,7 +18,7 @@
         <label for="inpEmail">Title: </label>
         <input id= "inpTitle" type="text" placeholder= "Tittel" value= "Tittel">
 
-        <label for="inpTask">Task:</label><!--Sett inn bildeboks istedenfor Password:-->
+        <label for="inpTask">Task:</label>
         <textarea id="inpTask">Write a task</textarea>
         <input type="submit" value= "Add Task">
 
@@ -32,9 +32,10 @@
 
 <script>
 
-    const database = require("./datahandler")
+    //const database = require("./modules/datahandler")
 
     let url = "https://task-lamalama.herokuapp.com/task/"
+    const database = require("./datahandler")
 
 
     let taskForm = document.getElementById('taskForm');
@@ -82,6 +83,57 @@
         
 
     });
+
+    class Task {
+
+constructor(task_id, task_title, owner) {
+    this.task_id = task_id;
+    this.task_title = task_title;
+    this.owner = owner;
+}
+
+async create() {
+    try {
+        let resp = await database.(this.task_id, this.task_title, this.owner);
+        return resp;
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+async getTaskDataFromDb() {
+    try {
+        let resp = await database.getTaskDataFromDb(this.owner, this.id);
+        return resp;
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+async update() {
+    try {
+        let resp = await database.updateTask(this.name);
+        return resp;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+async delete() {
+    try {
+        let resp = await database.deleteTask(this.name);
+        return resp;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+}
+
+
+module.exports = Task;
+
+
 
     
 </script>
