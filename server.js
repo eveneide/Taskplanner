@@ -4,7 +4,7 @@ const crypto = require('crypto');
 
 const authenticator = require('./modules/auth');
 const database = require('./modules/datahandler');
-const { makeToken, valToken, getPayload } = require('./modules/jtoken');
+const makeToken = require('./modules/jtoken');
 const secret = process.env.keysecret || require('./localenv').keysecret;
 
 const server = express();
@@ -16,7 +16,7 @@ server.use(express.static('public'));
 server.post('/user/auth', authenticator, async function (req, res) {
 
   if (req.login) {
-    let token = makeToken({ username: req.username });
+    let token = makeToken.makeToken({ username: req.username });
 
     res.status(200).json(token).end();
 
