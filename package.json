@@ -7,22 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/eveneide/Taskplanner.git"
-  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/eveneide/Taskplanner/issues"
-  },
-  "homepage": "https://github.com/eveneide/Taskplanner#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
     "pg": "^8.5.1"
-  },
-  "devDependencies": {},
-  "keywords": []
+  }
+  
 }
