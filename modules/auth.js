@@ -1,26 +1,44 @@
-const datahandler = require('./datahandler');
-const valToken = require("./jtoken").valToken;
+const crypto = require('crypto');
+const secret = process.env.keysecret || require('../localenv').keysecret;
+const database = require("./datahandler");
 
 const authenticator = async (req, res, next) => {
-  if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
-    return res.append("WWW-Authenticate", 'Basic realm="User Visible Realm", charset="UTF-8"').status(401).end();
+  if (!req.headers.authorization || req.headers.authorization.indexOf('Basic') === -1) {
+    return res.serverend("WWW-Authenticate", 'Basic realm="User Visible Realm", charset="UTF-8"').status(401).end()
   }
 
-  let user = {
-    username: req.body.user,
-    //password: '6179f1da72b2f5c466c25652eff2ebf46bca54c4a4d43ccc0ba120f8e56ddc92',
-    isValid: true
-  }
+  const credentials = req.headers.authorization.split(' ')[1];
+  const [username, password] = Buffer.from(credentials, 'base64').toString('UTF-8').split(":");
 
-  let token = req.headers.authorization.split(' ')[1];
+  const user = await authenticate(username, password);
 
-  let resp = valToken(token, user);
-  //console.log(resp) //true or false token
-  if (!resp) {
-    return res.status(403).json("token invalid").end();
+  if (user === false) {
+    req.login = false;
+  } else {
+    req.login = true;
+    req.username = username;
   }
   next();
 }
 
+async function authenticate(username, password) {
+  let psw = crypto.createHmac('sha256', secret)
+    .update(password)
+    .digest('hex');
 
-//module.exports = authenticator
+  let passwordDb = await database.aqPassword(username);
+
+
+  if (psw === passwordDb.password) {
+
+    return username;
+
+  } else {
+
+    return false;
+
+  }
+
+}
+
+module.exports = authenticator

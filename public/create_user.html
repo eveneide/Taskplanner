@@ -1,76 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Document</title>
- <link rel= "stylesheet" href= "css/stylesheet.css">
- <link rel="shortcut icon" href="#">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/stylesheet.css">
+    <link rel="shortcut icon" href="#">
+    <title>Create User</title>
+
+
 </head>
+
 <body>
-    <div class= "centered-container">
 
-        <div class= "create-login-container">
-    <h1 class= "title" >Create User: </h1>
-    <form id= "createUserForm">
+    <div class="centered-container">
 
-        <label for="inpUsername" class= "inputinfo" >Username: </label> <!--Sett inn bildeboks istedenfor Email:-->
-        <input id= "inpUsername" name= "username" type="text" class= "input" placeholder= "username" value= "test">
+        <div class="create-login-container">
+            <h1 class="title">Create User: </h1>
+            <form id="createUserForm">
 
-        <label for="inpPsw" class= "inputinfo">Password: </label><!--Sett inn bildeboks istedenfor Password:-->
-        <input id= "inpPsw" name= "psw" type="password" class= "input" placeholder= "Password" value= "aaa">
+                <label for="inpUsername" class="inputinfo">Username: </label>
+                
+                <input id="inpUsername" name="username" type="text" class="input" placeholder="username">
 
-        <input type="submit" class= "btn1" value= "Create Account"> 
+                <label for="inpPsw">Password: </label>
+                
+                <input id="inpPsw" name="psw" type="password" class="input" placeholder="Password">
 
-    </form>
-        <p id= "tilbakeMelding"></p>
+                <input type="submit" class="btn1" value="Create Account">
+                <button onclick="window.location.href='/login_user.html';" type="button" class="btn1">Login</button>
+
+            </form>
+            <p id="createLoginResponse" class="create-login-response"></p>
         </div>
     </div>
-<script>
-    
-    let url = "/user"
 
-    let createUserForm = document.getElementById('createUserForm');
-    let tilbakeMelding = document.getElementById('tilbakeMelding');
-
-    const createform = document.getElementById('createUserForm');
-
-    createform.addEventListener("submit", async function (evt) {
-
-        evt.preventDefault();
-
-        const inpUsername = document.getElementById("inpUsername").value;
-        const inpPsw = document.getElementById("inpPsw").value;
-
-
-                let body = {
-                    username: inpUsername,
-                    password: inpPsw
-                }
-                let config = {
-                    method: "POST",
-                    headers: {
-                        "content-type": "application/json"
-                    },
-                    body: JSON.stringify(body)
-                }
-
-                const response = await fetch("/user", config);
-                const data = await response.json();
-                
-                if (response.status === 200){
-            
-        }
-
-
-        
-
-
-    });
-
-
-
-</script>
+    <script src="/js/create_user.js"></script>
 
 </body>
+
+
+
 </html>

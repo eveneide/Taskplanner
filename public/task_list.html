@@ -1,119 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Document</title>
- <link rel= "stylesheet" href= "css/stylesheet.css">
- <link rel="shortcut icon" href="#">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/stylesheet.css">
+    <link rel="shortcut icon" href="#">
+    <title>Lama-Lama</title>
 </head>
+
 <body>
-    <div>
-        <div class= "task-list">
-        <div id= "header" class= "title"><h1>Task list </h1></div>
-        <hr>
-        <button id="addTask">Create New</button>
-        <hr>
+    <div class="headerDiv">
+        <header class="header"> Tasklist </header>
+    </div>
 
-        <div id= "taskContainer"> </div>
 
-        <p id= "tilbakeMelding"></p>
+    <div class="task-list-main">
+
+        <div class="task-list-filter"></div>
+
+        <select name="tasks" class="filter-task">
+            <option value="all">All</option>
+            <option value="done">Done</option>
+            <option value="due">To do</option>
+        </select>
+
+        <form class="taskForm">
+            <input type="text" class="inpTask">
+            <button class="addTaskBtn" type="submit">Add Task</button>
+        </form>
 
 
     </div>
+
+
+    </div>
+    <div class="taskContainer">
+        <ul class="task-list"></ul>
     </div>
 
-<script>
 
-    let url = "/task"
-
-    let taskContainer = document.getElementById('taskContainer');
-    let addTask = document.getElementById('addTask');
-    let tilbakeMelding = document.getElementById('tilbakeMelding');
-
-    let loginDataJson = localStorage.getItem("logindata"); //hvis vi vil hente lokaldata i json
-    let loginData = JSON.parse(loginDataJson); //hente lokal data, convertere fra json
-
-    addTask.addEventListener("click", newTask);
-
-    loadList();
-
-//----------------------------------------------------------------------------------------------------------------------------------------
-
-    async function loadList(){
-        
-        let cfg = {
-            method: "GET",
-            headers: {"authorization" : loginData.token}, // list all tasks. token hente fra database, antageligvis credentials i databasemodul. 
-        }
-
-        
-            let response = await fetch(url,cfg);
-            let data = await response.json();
-
-            for (let task of data){ // loop for gå gjennom og liste alle tasks. skal man hente dato må man ha det i infoen i create.
-                /*
-                let date = new Date(task.datetime); //lagre dato om vi vil
-                date = date.toDateString();
-                */
-                let div = document.createElement("div");
-                let html = `
-                    <p>${date}</p>
-                    <p>${task.title}</p>
-                    <p>${task.message}</p>
-                    <hr>   
-                `;                          // <p>${task.email}</p> for å hente emailen fra den som lagde task
-
-                let deleteBtn = document.createElement("button");
-                deleteBtn.innerHTML = "Delete Task"
-                let hr = document.createElement("hr");
-
-                div.innerHTML = html;
-                div.appendChild(deleteBtn);
-                div.appendChild(hr);
-                taskContainer.appendChild(div);
-
-                deleteBtn.addEventListener("click", function (){
-                    del(task.id);
-                });
-            }
-
-        }
-//----------------------------------------------------------------------------------------------------------------------------------------
-     function newTask(){
-        location.href = "create_Task.html";
-
-        }
-
-//----------------------------------------------------------------------------------------------------------------------------------------
-
-    async function del(taskid){
-
-        let url = "/task"
-
-        let fdata = {
-            id: taskid
-        }
-
-
-        let cfg = {
-            method: "DELETE",
-            headers: {"authorization" : theToken},
-            body: JSON.stringify(fdata) // credentials, hvor vi får token fra i db
-    }
-
-    let response = await fetch(url,cfg);
-    let data = await response.json();
-
-    loadList();
-
-
-}
-
-
-
-
-</script>
+    <script src="/js/task_list.js"></script>
 
 </body>
+
 </html>

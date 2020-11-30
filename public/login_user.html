@@ -1,71 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Document</title>
- <link rel= "stylesheet" href= "./css/stylesheet.css">
- <link rel="shortcut icon" href="#">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/stylesheet.css">
+    <link rel="shortcut icon" href="#">
+    <title>Login</title>
 </head>
+
 <body>
-    <div class= "centered-container">
+    <header>
 
-        <div class= "create-login-container">
-    <h1 class= "title">Login: </h1>
-    <form id= "loginForm">
+    </header>
+    <div class="centered-container">
 
-        <label for="inpUsername" class= "inputinfo" >Username: </label> <!--Sett inn bildeboks istedenfor Email:-->
-        <input id= "inpUsername" name= "username" type="text" class= "input" placeholder= "username" value= "test">
+        <div class="create-login-container">
+            <h1 class="title">Login </h1>
+            <form id="loginForm">
 
-        <label for="inpPsw" class= "inputinfo" >Password: </label><!--Sett inn bildeboks istedenfor Password:-->
-        <input id= "inpPsw" name= "psw" type="password" class= "input" placeholder= "Password" value= "aaa">
+                <label for="inpUsername" class="inputinfo">Username: </label>
+                
+                <input id="inpUsername" name="username" type="text" class="input" placeholder="username">
 
-        <input type="submit" class= "btn1" value= "Login">
+                <label for="inpPsw" class="inputinfo">Password: </label>
+               
+                <input id="inpPsw" name="psw" type="password" class="input" placeholder="Password">
 
-    </form>
-        <p id= "tilbakeMelding"></p>
+                <input type="submit" class="btn1" value="Login"><button
+                    onclick="window.location.href='/create_user.html';" type="button" class="btn1">Create
+                    Account</button>
+
+            </form>
+            <p id="createLoginResponse" class="create-login-response"></p>
         </div>
     </div>
-<script>
-
-    const url = "/user/auth"
-
-    let loginForm = document.getElementById('loginForm');
-    const inpUsername = document.getElementById("inpUsername").value;
-    const inpPsw = document.getElementById("inpPsw").value;
-    let tilbakeMelding = document.getElementById('tilbakeMelding');
-
-    loginForm.addEventListener('submit', async function(evt){
-
-        evt.preventDefault();
-
-        let fdata = {
-            username: inpUsername.value,
-            psw: inpPsw.value
-        }
-
-        let credentials = 'Basic '+ window.btoa(`${fdata.username}:${fdata.psw}`)
-
-
-         let cfg = {
-            method: "POST",
-            headers: {"content-type" : "application/json"}, "authorization": credentials,
-            body: JSON.stringify(fdata)
-        }
-        
-        let response = await fetch(url,cfg);
-        let data = await response.json();
-
-        if (response.status === 200){
-            localStorage.clear();
-            location.href="task_list.html";
-        }
-
-    });
-
-
-
-</script>
 
 </body>
+
+<script src="/js/login_user.js"></script>
+
 </html>

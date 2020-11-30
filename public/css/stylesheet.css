@@ -8,7 +8,80 @@ html,body {
     overflow: hidden;
 }
 
+.task-list-main{
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.993);
+    border-radius: 10px;
+    padding: 20px;
+    justify-content: center;
+    align-content: center;
+    border-bottom: cornflowerblue;
+    border-radius: 1rem;
 
+}
+
+.task-list-filter {
+    
+    position: relative;
+    overflow: hidden;
+
+}
+
+.taskForm{
+    background-color: rgba(255, 255, 255, 0.993);
+}
+
+.taskContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.993);
+    border-top: cornflowerblue;
+    border-radius: 1rem;
+
+}
+.task{
+    margin: 0.5rem;
+    background: white;
+    color: black;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+
+}
+.inpTask{
+    padding:10px;
+    margin-left: 1rem;
+
+}
+
+.task li{
+    flex: 1;
+    float:left;
+    border:1px solid cornflowerblue;
+    padding:15px;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+.task-item{
+    padding: 5px;
+    border-bottom:2px;
+    border-color: cornflowerblue;
+}
+
+.fa-trash,
+.fa-check{
+    pointer-events: none;
+    
+}
+.task-list{
+    min-width: 30%;
+    list-style: none;
+    
+
+}
 .centered-container {
     display: flex;
     align-items: center;
@@ -16,6 +89,25 @@ html,body {
     width: 100%;
     height: 100%;
 }
+
+.create-login-container {
+    background-color: rgba(255, 255, 255, 0.993);
+    border-radius: 10px;
+    padding: 70px;
+}
+
+.headerDiv{
+    display: block;
+    color: white;
+    text-align: center;
+}
+
+.header{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 32px;
+    text-transform: uppercase;
+}
+
 .title {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 24px;
@@ -23,12 +115,10 @@ html,body {
     letter-spacing: 1px;
     color: cornflowerblue;
 }
-.task-list{
-    display: inline-flexbox;
-    background-color: rgba(255, 255, 255, 0.993);
-    border-radius: 10px;
-    padding: 70px;
-
+.create-login-response{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    color: cornflowerblue;
 }
 
 .link_index{
@@ -36,6 +126,8 @@ html,body {
     font-size: 16px;
     display:flex;
     border-radius: 5px;
+    justify-content: center;
+    align-content: center;
 }
 
 .inputinfo {
@@ -55,20 +147,26 @@ html,body {
     margin-bottom: 5px;
 }
 
-.input:hover {
+.btn1,
+.addTaskBtn{
     border-color: cornflowerblue;
+    box-shadow: 0 0 0 0.125rem rgba(15, 94, 197, 0.25);
+    margin-top: 10px;
+    margin-right: 2px;
+    border-radius: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+
 }
 
-.btn1 {
-        border-color: cornflowerblue;
+.del-btn,
+.done-btn{
+    border-color: cornflowerblue;
         box-shadow: 0 0 0 0.125rem rgba(15, 94, 197, 0.25);
         margin-top: 10px;
+        margin-right: 2px;
         border-radius: 5px;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-        font-size: 16px;
+        font-size: 12px;
 }
-.create-login-container {
-    background-color: rgba(255, 255, 255, 0.993);
-    border-radius: 10px;
-    padding: 70px;
-}
+

@@ -7,30 +7,30 @@ const crypto = require('crypto');
 const algorithm = 'aes-256-ctr';
 const iv = crypto.randomBytes(16);
 
-function encrypt (user){
+function encrypt(user) {
     let cipher = crypto.createCipheriv(algorithm, Buffer.from(keysecret), iv);
     let encrypted = cipher.update(JSON.stringify(body));
     encrypted = Buffer.concat([encrypted, cipher.final()]);
     let ivString = iv.toString("hex");
     let encryptedDataString = encrypted.toString('hex');
 
-    let finalCipher = {"cipher":`${ivString}.${encryptedDataString}`};
-    
+    let finalCipher = { "cipher": `${ivString}.${encryptedDataString}` };
+
     return finalCipher;
 }
 
-function decrypt (cipher, user) {
+function decrypt(cipher, user) {
     const splitCipher = token.authToken.split(".");
     let tIV = splitCipher[0];
     let tEncryptedData = splitCipher[1];
     let iv = Buffer.from(tIV, 'hex');
-        let encryptedCipher = Buffer.from(tEncryptedData, 'hex');
-        let decipher = crypto.createDecipheriv(algorithm, Buffer.from(keysecret), iv);
-        let decrypted = decipher.update(encryptedCipher);
-        decrypted = Buffer.concat([decrypted, decipher.final()]);
+    let encryptedCipher = Buffer.from(tEncryptedData, 'hex');
+    let decipher = crypto.createDecipheriv(algorithm, Buffer.from(keysecret), iv);
+    let decrypted = decipher.update(encryptedCipher);
+    decrypted = Buffer.concat([decrypted, decipher.final()]);
 
-        let cipherText = decrypted.toString();
-        return cipherText;
+    let cipherText = decrypted.toString();
+    return cipherText;
 }
 
 

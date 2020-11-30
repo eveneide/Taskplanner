@@ -1,1 +1,0 @@
-//legg inn js her fra filene etter at koden er god nok
