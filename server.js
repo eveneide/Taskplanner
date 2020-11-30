@@ -100,6 +100,9 @@ server.put('/task', async (req, res) => {
 
 
 //Start server
-server.listen(8080, () => {
-  console.log(" server has started on port 8080")
+
+const port = process.env.port || 8080;
+
+server.listen(port, () => {
+  console.log(` server has started on port ${port}`)
 });
