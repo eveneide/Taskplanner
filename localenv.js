@@ -1,2 +1,0 @@
-module.exports.credentials = "postgres://rfuadizyydlqiy:7c24f0a798896ca6854a331bbef0fe841290d57cbeab292a40842eb5ec9e2a08@ec2-54-228-209-117.eu-west-1.compute.amazonaws.com:5432/d9gm59r4t43u7i"
-module.exports.keysecret = "JosteinNordengen"
