@@ -1,5 +1,5 @@
 const pg = require('pg');
-const dbcredentials = process.env.DATABASE_URL || require('../localenv').DATABASE_URL;
+const dbcredentials = process.env.credentials || require('../localenv').credentials;
 
 
 class StorageHandler {
